@@ -1,6 +1,6 @@
 # Workflow
 
-Setting up the workspace.
+Setting up the workspace!
 
 ## Setup Order
 
