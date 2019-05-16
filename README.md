@@ -6,13 +6,19 @@ Setting up the workspace!
 
 ```
 $ npm install
-$ gulp setUpSpace
+$ gulp setUpMaterialize (for Materialize ONLY)
 $ gulp sassifyCSS
 ```
 
 [//]: <> (This is also a comment.)
 
 ## Utilities
+
+```
+$ npm install materialize-css@next
+```
+
+Install Materialize CSS
 
 ```
 $ gulp cleanUp

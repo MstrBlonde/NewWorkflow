@@ -5,7 +5,6 @@ const minifycss = require('gulp-clean-css');
 const rename = require('gulp-rename');
 const clean = require('gulp-clean');
 const concat = require('gulp-concat');
-const open = require('gulp-open');
 const { parallel, series, src, dest } = require('gulp');
 
 // Remove ./dist directory
@@ -115,7 +114,7 @@ exports.createImgDirs = function() {
     .pipe(dest('dist/img'));
 };
 
-exports.setUpSpace = series(exports.copySassVariables, exports.copyMaterialize, exports.copySassComponents, exports.copyJS, exports.copyIndexHtml, exports.createImgDirs);
+exports.setUpMaterialize = series(exports.copySassVariables, exports.copyMaterialize, exports.copySassComponents, exports.copyJS, exports.copyIndexHtml, exports.createImgDirs);
 
 // exports.open = function() {
 //   return src('dist/index.html').pipe(open({ app: 'chrome' }));
