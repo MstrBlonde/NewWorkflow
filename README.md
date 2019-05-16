@@ -4,10 +4,22 @@ Setting up the workspace!
 
 ## Setup Order
 
+### Setup _with_ Material CSS
+
 ```
 $ npm install
 $ gulp setUpMaterialize (for Materialize ONLY)
 $ gulp sassifyCSS
+```
+
+### Setup _without_ Material CSS
+
+Delete indexM.html, ./js/init.js and ./scss/appM.scss, then:
+
+```
+$ npm install
+$ gulp makeDirs
+$ gulp copySource
 ```
 
 [//]: <> (This is also a comment.)

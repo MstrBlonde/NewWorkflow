@@ -7,6 +7,18 @@ const clean = require('gulp-clean');
 const concat = require('gulp-concat');
 const { parallel, series, src, dest } = require('gulp');
 
+// Create default directories
+exports.makeDirs = function() {
+  return src('*.*', { read: false })
+    .pipe(dest('./dist'))
+    .pipe(dest('./dist/css'))
+    .pipe(dest('./dist/img'))
+    .pipe(dest('./dist/js'))
+    .pipe(dest('./src'))
+    .pipe(dest('./src/css'))
+    .pipe(dest('./src/img'));
+};
+
 // Remove ./dist directory
 exports.cleanUp = function() {
   return src('dist', { allowEmpty: true }).pipe(clean({ force: true }));
@@ -51,15 +63,12 @@ exports.minifyCSS = function() {
 
 // Compile SASS
 exports.sassifyCSS = function() {
-  return (
-    src('src/scss/*.scss')
-      .pipe(sass().on('error', sass.logError))
-      //.pipe(dest('dist/css'))
-      .pipe(dest('src/css'))
-      .pipe(minifycss())
-      .pipe(rename({ extname: '.min.css' }))
-      .pipe(dest('dist/css'))
-  );
+  return src('src/scss/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(dest('src/css'))
+    .pipe(minifycss())
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(dest('dist/css'));
 };
 
 const mDir = 'node_modules/materialize-css/';
