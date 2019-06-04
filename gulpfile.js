@@ -7,12 +7,8 @@ const clean = require('gulp-clean');
 const concat = require('gulp-concat');
 const { parallel, series, src, dest } = require('gulp');
 
-exports.default = cb => {
-  cb();
-};
-
 // Create default directories
-exports.makeDirs = () => {
+exports.makeDirs = async () => {
   return src('*.*', { read: false })
     .pipe(dest('./dist'))
     .pipe(dest('./dist/css'))
@@ -24,24 +20,24 @@ exports.makeDirs = () => {
 };
 
 // Remove ./dist directory
-exports.cleanUp = () => {
+exports.cleanUp = async () => {
   return src('dist', { allowEmpty: true }).pipe(clean({ force: true }));
 };
 
 // Copy ALL HTML and PHP files
-exports.copySource = () => {
+exports.copySource = async () => {
   return src('src/*.{htm,html,php}').pipe(dest('dist'));
 };
 
 // Optimize Images
-exports.imageMin = () => {
+exports.imageMin = async () => {
   return src('src/img/*.{png,gif,jpg}')
     .pipe(imagemin())
     .pipe(dest('dist/img'));
 };
 
 // Concatenate and minify JS files into main.js
-exports.concatJS = () => {
+exports.concatJS = async () => {
   return src('src/js/*.js')
     .pipe(concat('main.js'))
     .pipe(minifyjs())
@@ -50,7 +46,7 @@ exports.concatJS = () => {
 };
 
 // Minify JS
-exports.minifyJS = () => {
+exports.minifyJS = async () => {
   return src('src/js/*.js')
     .pipe(minifyjs())
     .pipe(rename({ extname: '.min.js' }))
@@ -58,7 +54,7 @@ exports.minifyJS = () => {
 };
 
 // Minify CSS
-exports.minifyCSS = () => {
+exports.minifyCSS = async () => {
   return src('dist/css/*.css', { allowEmpty: true })
     .pipe(minifycss())
     .pipe(rename({ extname: '.min.css' }))
@@ -66,7 +62,7 @@ exports.minifyCSS = () => {
 };
 
 // Compile SASS
-exports.sassifyCSS = () => {
+exports.sassifyCSS = async () => {
   return src('src/scss/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(dest('src/css'))
@@ -77,24 +73,24 @@ exports.sassifyCSS = () => {
 
 const mDir = 'node_modules/materialize-css/';
 
-exports.copySassVariables = () => {
+exports.copySassVariables = async () => {
   // Copy the Materialize variables file to dev scss directory
   return src(mDir + 'sass/components/_variables.scss').pipe(dest('src/scss'));
 };
 
-exports.copyMaterialize = () => {
+exports.copyMaterialize = async () => {
   // Copy the Materialize css file to dev scss directory as an include
   return src(mDir + 'sass/materialize.scss')
     .pipe(rename({ prefix: '_' }))
     .pipe(dest('src/scss'));
 };
 
-exports.copySassComponentsRoot = () => {
+exports.copySassComponentsRoot = async () => {
   // Copy the Materialize components directory to dev scss directory
   return src(mDir + 'sass/components/*').pipe(dest('src/scss/components'));
 };
 
-exports.copySassComponentsForms = () => {
+exports.copySassComponentsForms = async () => {
   // Copy the Materialize components/forms directory to dev scss directory
   return src(mDir + 'sass/components/forms/*').pipe(dest('src/scss/components/forms'));
 };
@@ -102,12 +98,12 @@ exports.copySassComponentsForms = () => {
 // Combine them into one task
 exports.copySassComponents = series(exports.copySassComponentsRoot, exports.copySassComponentsForms);
 
-exports.copyJSRoot = () => {
+exports.copyJSRoot = async () => {
   // Copy root JS folder
   return src(mDir + 'dist/js/*').pipe(dest('src/js'));
 };
 
-exports.copyJSExtras = () => {
+exports.copyJSExtras = async () => {
   // Copy JS/extras to dev only
   return src(mDir + 'js/*').pipe(dest('src/js/extras'));
 };
@@ -115,12 +111,12 @@ exports.copyJSExtras = () => {
 // Combine them into one task
 exports.copyJS = series(exports.copyJSRoot, exports.copyJSExtras);
 
-exports.copyIndexHtml = () => {
+exports.copyIndexHtml = async () => {
   // Copy the pre-made index.html file
   return src('src/index.html').pipe(dest('dist'));
 };
 
-exports.createImgDirs = () => {
+exports.createImgDirs = async () => {
   // Create empty image directories
   return src('*.*', { read: false })
     .pipe(dest('src/img'))
