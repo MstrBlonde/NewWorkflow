@@ -4,7 +4,8 @@
   "description": "Boilerplate Site Install",
   "main": "index.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "setup": "gulp makeDirs"
   },
   "author": "",
   "license": "MIT",
@@ -13,11 +14,13 @@
     "gulp-clean": "^0.4.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-babel": "^8.0.0",
     "gulp-file": "^0.4.0",
     "gulp-imagemin": "^5.0.3",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.2"
+    "gulp-uglify": "^3.0.2",
+    "dotenv": "^8.0.0"
   },
   "dependencies": {
     "start": "^5.1.0"
